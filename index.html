@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Verification</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Make the iframe fill the entire page */
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* Optional: Removes the iframe border */
+        }
+    </style>
+</head>
+<body>
+<!-- <button onClick="fireMessageEvent()">Fire Message Event</button> -->
+<iframe id="verificationFrame" width="100%" height="100%"></iframe>
+    <script>
+        // Get the path from the URL
+        const queryString = window.location.search;
+
+        // Create a URLSearchParams object
+        const urlParams = new URLSearchParams(queryString);
+
+        // Get a specific parameter (e.g., ?name=John)
+        const token = urlParams.get('token');
+
+        // Construct the verification URL
+        let verificationUrl = "https://family.test.k-id.com/verify?token=" + encodeURIComponent(token);
+
+        // Set the iframe source
+        document.getElementById("verificationFrame").src = verificationUrl;
+
+
+
+        window.addEventListener("message", (event) => {
+            // Security check: Ensure the message is from the expected origin
+            // if (event.origin !== "https://example.com") {
+            //     console.warn("Received message from untrusted origin:", event.origin);
+            //     return;
+            // }
+
+            alert("Message received from iframe:", event);
+        });
+
+        console.log("HI")
+
+        function fireMessageEvent() {
+            window.postMessage({"Baobao": "Boba"})
+        }
+    </script>
+</body>
+</html>
